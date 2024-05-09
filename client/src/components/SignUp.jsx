@@ -14,10 +14,12 @@ const SignUp = () => {
     try {
       await createUser(email,password);
       console.log("New User Signed Up Successfully!")
-      navigate("/account")
+      navigate("/tasks")
     } catch (error) {
       console.log(error);
     }
+
+    //TODO:post user to mysql db
   }
 
   return (

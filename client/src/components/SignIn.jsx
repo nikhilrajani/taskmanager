@@ -14,7 +14,7 @@ const SignIn = () => {
     try {
       await signIn(email,password);
       console.log("User Signed In Successfully!")
-      navigate("/account")
+      navigate("/tasks")
     } catch (error) {
       console.log(error);
     }

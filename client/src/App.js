@@ -5,6 +5,9 @@ import SignUp from './components/SignUp'
 import Account from './components/Account'
 import { AuthContextProvider } from './context/AuthContext' 
 import ProtectedRoute from './components/ProtectedRoute'
+import Tasks from './components/Tasks'
+import Update from './components/Update'
+import Add from './components/Add'
 
 const App = () => {
   return (
@@ -19,6 +22,24 @@ const App = () => {
           <Route path="/account" element={
               <ProtectedRoute>
                 <Account />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="/tasks" element={
+              <ProtectedRoute>
+                <Tasks />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="/add" element={
+              <ProtectedRoute>
+                <Add />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="/update" element={
+              <ProtectedRoute>
+                <Update />
               </ProtectedRoute>
             } 
           />
