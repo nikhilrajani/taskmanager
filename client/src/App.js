@@ -1,4 +1,6 @@
 import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
@@ -11,10 +13,8 @@ import Add from './components/Add'
 
 const App = () => {
   return (
-    <div>
-      <h1 className="text-center text-3xl font-bold">
-        Firebase Auth & Context
-      </h1>
+    <div className="container App">
+      <h1>Task Manager</h1>
       <AuthContextProvider>
         <Routes>
           <Route path="/" element={<SignIn />} />

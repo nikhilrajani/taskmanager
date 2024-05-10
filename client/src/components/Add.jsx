@@ -32,11 +32,41 @@ const Add = () => {
 
   return (
     <div>
-      <h1 className="font-bold">Add new book</h1>
-      <input type="text" placeholder="Task..." onChange={handleChange} name="text"/>
-      <input type="text" placeholder="Priority..." onChange={handleChange} name="priority"/>
-      <input type="date" placeholder="Due Date..." onChange={handleChange} name="dueDate"/>
-      <button type='submit' onClick={handleClick}>Submit</button>
+      <h1 className="font-bold">Add new task</h1>
+      <div className="row py-2">
+        <div className="col">
+          <input 
+            placeholder="Enter the task"
+            type="text"
+            name="text"
+            onChange={handleChange}
+            className="form-control form-control-lg"
+          />
+        </div>
+      </div>
+      <div className="row py-2">
+        <div className="col">
+          <input 
+            placeholder="Priority"
+            type="text"
+            name="priority"
+            onChange={handleChange}
+            className="form-control form-control-lg"
+          />
+        </div>
+        <div className='col'>
+          <input
+            placeholder="Due Date"
+            type="date" 
+            name="dueDate"
+            onChange={handleChange}
+            className="form-control form-control-lg"
+          />
+        </div>
+      </div>
+      <div className="py-2">
+        <button type='submit' onClick={handleClick} className="btn btn-lg btn-success">Submit</button>
+      </div>
     </div>
   )
 }
