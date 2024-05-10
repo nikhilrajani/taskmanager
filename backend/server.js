@@ -41,6 +41,21 @@ app.get("/tasks/:uid",(req,res)=>{
     })
 })
 
+app.get("/tasks/:uid/:id",(req,res)=>{
+    const user_id=req.params.uid;
+    const taskId=req.params.id;
+    const q="SELECT * FROM tasks WHERE id=?"
+
+    db.query(q,[taskId],(err,data)=>{
+        if(err){
+            return res.json(err);
+        }
+        else{
+            return res.json(data);
+        }
+    })
+})
+
 app.post("/tasks",(req,res)=>{
     const q="INSERT INTO tasks (`text`,`priority`,`dueDate`,`user_uid`)VALUES (?)"
 
@@ -48,7 +63,7 @@ app.post("/tasks",(req,res)=>{
         req.body.text,
         req.body.priority,
         req.body.dueDate,
-        req.user_uid
+        req.body.user_uid
     ]
 
     db.query(q,[values],(err,data)=>{

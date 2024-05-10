@@ -1,17 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {useLocation, useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import { UserAuth } from '../context/AuthContext';
 
 const Update = () => {
     const [task, setTask] = useState({
-        description:"",
+        text:"",
         priority:"",
         dueDate:"",
     });
 
+    const {user}=UserAuth();
     const navi=useNavigate();
     const location=useLocation();
     const taskId=location.pathname.split("/")[2];
+
+    useEffect(() => {
+      const fetchTask = async () =>{
+        try {
+            const res=await axios.get("http://localhost:8800/tasks/"+user.uid.toString()+"/"+taskId.toString())
+            console.log(res.data);
+            // console.log(taskId)
+            // setTask(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+      }
+
+      fetchTask();
+    }, [])
+    
 
     const handleChange = (e) => {
         setTask(prev=>({...prev,[e.target.name]:e.target.value}));
@@ -21,8 +39,9 @@ const Update = () => {
         e.preventDefault();
 
         try {
-            await axios.put("http://localhost:8800/tasks/"+taskId  ,task);
-            navi("/");
+            const res=await axios.put("http://localhost:8800/tasks/"+taskId  ,task);
+            // console.log(res);
+            navi("/tasks");
         } catch (error) {
             console.log(error);
         }
@@ -30,8 +49,8 @@ const Update = () => {
   return (
     <div className="form">
         <h1>Update Task</h1>
-        <input type="text" placeholder="description" onChange={handleChange} name="description"/>
-        <input type="select" placeholder="priority" onChange={handleChange} name="priority" />
+        <input type="text" placeholder="text" onChange={handleChange} name="text"/>
+        <input type="select" placeholder="priority" onChange={handleChange} name="priority"/>
         <input type="date" placeholder="dueDate" onChange={handleChange} name="dueDate"/>
 
         <button onClick={handleClick}>Update</button>

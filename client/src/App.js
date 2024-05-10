@@ -37,7 +37,7 @@ const App = () => {
               </ProtectedRoute>
             } 
           />
-          <Route path="/update" element={
+          <Route path="/update/:id" element={
               <ProtectedRoute>
                 <Update />
               </ProtectedRoute>

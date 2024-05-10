@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { UserAuth } from '../context/AuthContext';
 import Task from './Task';
+import {Link} from 'react-router-dom';
 
 const Tasks = () => {
     const {user}=UserAuth();
@@ -25,6 +26,14 @@ const Tasks = () => {
       {tasks && tasks.map((task)=>(
         <Task task={task} key={task.id} />
       ))}
+
+      <div>
+        <button>
+          <Link to="/add">
+            <p>Add Task</p>
+          </Link>
+        </button>
+      </div>
     </div>
   )
 }
