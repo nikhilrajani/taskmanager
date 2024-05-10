@@ -51,6 +51,10 @@ const Update = () => {
             console.log(error);
         }
     }
+
+    const handleCancel = () => {
+        navi('/tasks')
+      }
   return (
     <div className="form">
         <h1 className="font-bold">Update task</h1>
@@ -87,7 +91,8 @@ const Update = () => {
             </div>
         </div>
         <div className="py-2">
-            <button type='submit' onClick={handleClick} className="btn btn-lg btn-success">Submit</button>
+            <button type='submit' onClick={handleClick} className="btn btn-lg btn-success mx-2">Submit</button>
+            <button onClick={handleCancel} className="btn btn-lg btn-danger">Cancel</button>
         </div>
     </div>
   )

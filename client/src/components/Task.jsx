@@ -23,9 +23,9 @@ const Task = ({task}) => {
 
   return (
     <React.Fragment key={task.id}>
-      <div className="col taskBg">
+      <div className="col taskBg w-[1000px]">
           <div className={isCompleted ? "done":""}>
-            <span className="taskText">{task.text}</span>
+            <span className="taskText font-bold">{task.text}</span>
           </div>
           <div className="iconsWrap">
             {isCompleted ? (

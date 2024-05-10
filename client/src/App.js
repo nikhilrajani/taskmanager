@@ -13,8 +13,10 @@ import Add from './components/Add'
 
 const App = () => {
   return (
-    <div className="container App">
-      <h1>Task Manager</h1>
+    <div className="container App flex flex-col justify-center items-center">
+      <br/><br/>
+      <h1 className="font-bold text-[50px]">Task Manager</h1>
+      <br/><br/>
       <AuthContextProvider>
         <Routes>
           <Route path="/" element={<SignIn />} />

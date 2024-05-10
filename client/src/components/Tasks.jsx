@@ -3,13 +3,18 @@ import axios from 'axios';
 import { UserAuth } from '../context/AuthContext';
 import Task from './Task';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import { faAdd,faFilter } from '@fortawesome/free-solid-svg-icons';
-import {Link} from 'react-router-dom';
+import { faAdd,faFilter,faSignOut } from '@fortawesome/free-solid-svg-icons';
+import {Link,useNavigate} from 'react-router-dom';
 
 const Tasks = () => {
-    const {user}=UserAuth();
+    const {user,logout}=UserAuth();
     const [tasks, setTasks] = useState([]);
     const [query, setQuery] = useState('');
+    const [sortOrder,setSortOrder]=useState('');
+    const [sortedTasks,setSortedTasks]=useState([]);
+    const [showDropDown,setShowDropDown]=useState(false);
+    const navigate=useNavigate();
+
 
     useEffect(() => {
       const fetchTasks = async () => {
@@ -21,8 +26,53 @@ const Tasks = () => {
             console.log(error);
         }
       }
+
+      const sortTasks=()=>{
+        let sorted=[...tasks];
+        
+        if(sortOrder===''){
+          return;
+        }
+        const mp={"Low":"1","Medium":"2","High":"3"};
+        sorted.sort((a,b)=>{
+          if(sortOrder==='Ascending Priority'){
+            return mp[a.priority].localeCompare(mp[b.priority]);
+          }
+          else if(sortOrder==='Descending Priority'){
+            return mp[b.priority].localeCompare(mp[a.priority]);
+          }
+          else if(sortOrder==='Ascending Due Date'){
+            return a.dueDate.localeCompare(b.dueDate);
+          }
+          else if(sortOrder==='Descending Due Date'){
+            return b.dueDate.localeCompare(a.dueDate);
+          }
+        });
+
+        setSortedTasks(sorted);
+      }
       fetchTasks();
-    }, [user])
+      sortTasks();
+    }, [sortOrder,tasks,user])
+
+    const toggleDropDown = () =>{
+      setShowDropDown(!showDropDown);
+    }
+
+    const handlePriorityChange = (e) => {
+      setSortOrder(e.target.value);
+      setShowDropDown(false);
+    }
+
+    const handleLogOut = async () => {
+      try {
+        await logout();
+        navigate("/");
+        console.log("User logged out!")
+      } catch (error) {
+        console.log(error)
+      }
+    }
     
   return (
     <div>
@@ -36,14 +86,26 @@ const Tasks = () => {
               className="form-control form-control-lg"
             />
           </div>
-          <div className="col-auto">
-            <button className="btn btn-lg btn-success mx-2">
+          <div className="col-auto relative">
+            <button className="btn btn-lg btn-success" onClick={toggleDropDown}>
               <FontAwesomeIcon icon={faFilter} />
             </button>
-            <button className="btn btn-lg btn-success">
+            {showDropDown && 
+              <select onChange={handlePriorityChange} className="absolute top-0 form-control form-control-lg">
+                <option value="">Select filter</option>
+                <option value="Ascending Priority">Ascending Priority</option>
+                <option value="Descending Priority">Descending Priority</option>
+                <option value="Ascending Due Date">Ascending Due Date</option>
+                <option value="Descending Due Date">Descending Due Date</option>
+              </select>            
+            }
+            <button className="btn btn-lg btn-success mx-2">
               <Link className="custom-link" to="/add">
                 <FontAwesomeIcon icon={faAdd} />
               </Link>
+            </button>
+            <button className="btn btn-lg btn-success" onClick={handleLogOut}>
+              <FontAwesomeIcon icon={faSignOut}/>
             </button>
           </div>
         </div>
@@ -51,11 +113,20 @@ const Tasks = () => {
 
       {tasks && tasks.length ? "" : "No tasks found..."}
 
-      <>
-        {tasks.filter((task)=>task.text.toLowerCase().includes(query.toLowerCase())).map((task)=>(
-          <Task task={task} key={task.id}/>
-        ))}
-      </>
+      
+        {sortOrder==='' ? (
+          <>
+            {tasks.filter((task)=>task.text.toLowerCase().includes(query.toLowerCase())).map((task)=>(
+              <Task task={task} key={task.id}/>
+            ))}
+          </>
+        ):(
+          <>
+            {sortedTasks.filter((task)=>task.text.toLowerCase().includes(query.toLowerCase())).map((task)=>(
+              <Task task={task} key={task.id}/>
+            ))}
+          </>
+        )}
     </div>
   )
 }

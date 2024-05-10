@@ -29,6 +29,10 @@ const Add = () => {
     }
   }
 
+  const handleCancel = () => {
+    navigate('/tasks')
+  }
+
 
   return (
     <div>
@@ -46,13 +50,12 @@ const Add = () => {
       </div>
       <div className="row py-2">
         <div className="col">
-          <input 
-            placeholder="Priority"
-            type="text"
-            name="priority"
-            onChange={handleChange}
-            className="form-control form-control-lg"
-          />
+          <select name="priority" className="form-control form-control-lg" onChange={handleChange}>
+            <option value="">Select an option</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
         </div>
         <div className='col'>
           <input
@@ -65,7 +68,8 @@ const Add = () => {
         </div>
       </div>
       <div className="py-2">
-        <button type='submit' onClick={handleClick} className="btn btn-lg btn-success">Submit</button>
+        <button type='submit' onClick={handleClick} className="btn btn-lg btn-success mx-2">Submit</button>
+        <button onClick={handleCancel} className="btn btn-lg btn-danger">Cancel</button>
       </div>
     </div>
   )
