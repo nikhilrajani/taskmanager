@@ -10,6 +10,7 @@ const Add = () => {
     dueDate:"",
     user_uid:""
   })
+  const apiurl=process.env.REACT_APP_BACKEND_API_URL;
   const {user}=UserAuth();
   const navigate=useNavigate();
 
@@ -21,7 +22,7 @@ const Add = () => {
   const handleClick = async (e) =>{
     e.preventDefault();
     try {
-      const res=await axios.post("http://localhost:8800/tasks",task);
+      const res=await axios.post(`${apiurl}/tasks`,task);
       console.log('Task Added Succesfully!')
       navigate("/tasks");
     } catch (error) {

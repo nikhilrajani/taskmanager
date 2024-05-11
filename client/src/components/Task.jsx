@@ -7,10 +7,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 const Task = ({task}) => {
+  const apiurl=process.env.REACT_APP_BACKEND_API_URL;
   const [isCompleted,setIsCompleted]=useState(false);
   const handleDelete = async () =>{
     try {
-      await axios.delete("http://localhost:8800/tasks/"+task.id);
+      await axios.delete(`${apiurl}/tasks/`+task.id);
       // window.location.reload();
     } catch (error) {
       console.log(error)

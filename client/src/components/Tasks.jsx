@@ -14,12 +14,13 @@ const Tasks = () => {
     const [sortedTasks,setSortedTasks]=useState([]);
     const [showDropDown,setShowDropDown]=useState(false);
     const navigate=useNavigate();
+    const apiurl=process.env.REACT_APP_BACKEND_API_URL;
 
 
     useEffect(() => {
       const fetchTasks = async () => {
         try {
-            const res=await axios.get("http://localhost:8800/tasks/"+user.uid.toString())
+            const res=await axios.get(`${apiurl}/tasks/`+user.uid.toString())
             console.log(res.data);
             setTasks(res.data);
         } catch (error) {

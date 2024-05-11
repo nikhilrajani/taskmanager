@@ -17,11 +17,12 @@ const Update = () => {
     const location=useLocation();
     const taskId=location.pathname.split("/")[2];
     const ref=useRef();
+    const apiurl=process.env.REACT_APP_BACKEND_API_URL;
 
     useEffect(() => {
       const fetchTask = async () =>{
         try {
-            const res=await axios.get("http://localhost:8800/tasks/"+user.uid.toString()+"/"+taskId.toString())
+            const res=await axios.get(`${apiurl}/tasks/`+user.uid.toString()+"/"+taskId.toString())
             // console.log(taskId)
             // console.log(currTask.text);
             // console.log(res.data);
@@ -45,7 +46,7 @@ const Update = () => {
         e.preventDefault();
 
         try {
-            await axios.put("http://localhost:8800/tasks/"+taskId  ,task);
+            await axios.put(`${apiurl}/tasks/`+taskId  ,task);
             navi("/tasks");
         } catch (error) {
             console.log(error);
