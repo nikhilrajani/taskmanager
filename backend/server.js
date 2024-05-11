@@ -2,9 +2,10 @@ import express from "express";
 import mysql from "mysql";
 import cors from 'cors';
 import dotenv from 'dotenv';
+import postgres from "postgres";
 
 dotenv.config();
-
+let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env;
 const app=express();
 
 const db=mysql.createConnection({
@@ -22,6 +23,25 @@ db.connect(function(err){
         console.log('Connected to MySQL Server!');
     }
 })
+
+// const sql = postgres({
+//     host: PGHOST,
+//     database: PGDATABASE,
+//     username: PGUSER,
+//     password: PGPASSWORD,
+//     port: 5432,
+//     ssl: 'require',
+//     connection: {
+//       options: `project=${ENDPOINT_ID}`,
+//     },
+//   });
+  
+//   async function getPgVersion() {
+//     const result = await sql`select version()`;
+//     console.log(result);
+//   }
+
+//   getPgVersion();
 
 app.use(express.json());
 app.use(cors());
